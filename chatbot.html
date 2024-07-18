@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Evolved AI Chatbot</title>
+  <link rel="icon" href="favicon.ico" />
+  <!-- Meta Tags-->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="title" content="Evolved AI Chatbot" />
+  <meta name="description" content="Chatbot Description ..." />
+  <meta name="keywords" content="react, material-ui, workflow automation, llm, artificial-intelligence" />
+  <meta name="author" content="Evolved AI" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://evolved.ai/" />
+  <meta property="og:site_name" content="https://www.evolved.ai/" />
+  <meta property="og:title" content="Evolved AI Chatbot" />
+  <meta property="og:description" content="Chatbot Description ..." />
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://twitter.com/EvolvedAI" />
+  <meta property="twitter:title" content="Evolved AI Chatbot" />
+  <meta property="twitter:description" content="Chatbot Description ..." />
+  <meta name="twitter:creator" content="@EvolvedAI" />
+</head>
+
+<body>
+  <flowise-fullchatbot></flowise-fullchatbot>
+  <script>
+    // To get a specific parameter by name
+    function getUrlParam(param) {
+      let urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    //get theme from url
+    theme = getUrlParam('theme')
+    console.log(theme)
+    if (theme == null)
+      theme = 0
+
+    theme_colors = [
+      "rgb(13, 30, 112)",
+      "#1d7874",
+      "#F4C095",
+    ]
+  </script>
+  <script type="module">
+    import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+    Chatbot.initFull({
+      chatflowid: "c8788095-54d7-4041-b036-284de16e3dfb",
+      apiHost: "https://evolved-ai-flowise-chatbot.onrender.com",
+      theme: {
+        chatWindow: {
+          showTitle: true,
+          title: 'Evolved Bot',
+          titleAvatarSrc: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAclBMVEX////4+Ppxdp4JHG88RIHAwtIqNHkABmoBGW4AAF3IythBSYTW1+IAAGMNHnAAEmxkapbk5ewAAFsAFW0AAGfP0NxNVIohLXYADmujpb7p6u81Pn4AAGCztcnu7vOSlbP19fh3e6F9gaW6vM5SWIxZX5AJD7lpAAABlklEQVR4AYWTh5bbIBQFB6MGMnIB7aJeLP//L0YvPVmXURf1Dgd+ow46SXlBluvCWCAtD4qvHF1VVaczXK4+nPlKLRX8B6ShKj55QHGqKh0BH0zDA9qud8HVoIaax6gxLSveMGUzz2gHCyz9erMzAvWRvxhMcAkoF0MwA9B65zIlBssUmI2uqjDB5vc0poVuj5Uf4Bz89QI2iKg7LHF/CQOq359aw2dRhRRuQf6vMMmLs4xirkigMcEDa/QxhBnmkJ9CIka1P5kUqAcFc++2ZZoBxvU+AaWLH2fLL7JF/SdE/+2z1tN/UpeMX9jzFl0JTPd1BpinZXO9vNYjkJrotcRIwkkmyRhC9HEFOneV/4WkGrGSSkStubzckD8+A633714xSPy4wP0kFSwcjc43OOS7wA5aUe03ESWqZ6AJ5Qgqc65oQRYrRKcgcbJYf3GsQZjtbTULYIeWZ8yfE28oynRUPGasgdoF13ctD0ivrgOi3mMVPCDzlbPw4cXcka9suTZHOJ+eVRjL0ADWFDrPeEGa6L+29zePvhz6Kr862gAAAABJRU5ErkJggg==',
+          showAgentMessages: true,
+          welcomeMessage: 'Welcome to Our Employee Engagement Survey! Thank you for taking the time to participate in this important survey. Your feedback is crucial to us as it helps us understand your experiences and identify opportunities to enhance our workplace. Please be assured that your responses are completely anonymous and will be used solely to improve our team environment and your job satisfaction. This survey consists of a few quick questions and should only take a few minutes to complete. We appreciate your honest and thoughtful responses. Are you ready to start?',
+          errorMessage: 'This is a custom error message',
+          backgroundColor: "#ffffff",
+          height: 0,
+          width: 0,
+          fontSize: 16,
+          poweredByTextColor: theme_colors[theme],
+          botMessage: {
+            backgroundColor: "#f7f8ff",
+            textColor: "#303235",
+            showAvatar: true,
+            avatarSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAclBMVEX////4+Ppxdp4JHG88RIHAwtIqNHkABmoBGW4AAF3IythBSYTW1+IAAGMNHnAAEmxkapbk5ewAAFsAFW0AAGfP0NxNVIohLXYADmujpb7p6u81Pn4AAGCztcnu7vOSlbP19fh3e6F9gaW6vM5SWIxZX5AJD7lpAAABlklEQVR4AYWTh5bbIBQFB6MGMnIB7aJeLP//L0YvPVmXURf1Dgd+ow46SXlBluvCWCAtD4qvHF1VVaczXK4+nPlKLRX8B6ShKj55QHGqKh0BH0zDA9qud8HVoIaax6gxLSveMGUzz2gHCyz9erMzAvWRvxhMcAkoF0MwA9B65zIlBssUmI2uqjDB5vc0poVuj5Uf4Bz89QI2iKg7LHF/CQOq359aw2dRhRRuQf6vMMmLs4xirkigMcEDa/QxhBnmkJ9CIka1P5kUqAcFc++2ZZoBxvU+AaWLH2fLL7JF/SdE/+2z1tN/UpeMX9jzFl0JTPd1BpinZXO9vNYjkJrotcRIwkkmyRhC9HEFOneV/4WkGrGSSkStubzckD8+A633714xSPy4wP0kFSwcjc43OOS7wA5aUe03ESWqZ6AJ5Qgqc65oQRYrRKcgcbJYf3GsQZjtbTULYIeWZ8yfE28oynRUPGasgdoF13ctD0ivrgOi3mMVPCDzlbPw4cXcka9suTZHOJ+eVRjL0ADWFDrPeEGa6L+29zePvhz6Kr862gAAAABJRU5ErkJggg==",
+          },
+          userMessage: {
+            backgroundColor: theme_colors[theme],
+            textColor: "#ffffff",
+            showAvatar: true,
+            avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
+          },
+          textInput: {
+            placeholder: 'Type your question',
+            backgroundColor: '#ffffff',
+            textColor: '#303235',
+            sendButtonColor: theme_colors[theme],
+            maxChars: 50,
+            maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.',
+            autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
+            sendMessageSound: false,
+            // sendSoundLocation: "send_message.mp3", // If this is not used, the default sound effect will be played if sendSoundMessage is true.
+            receiveMessageSound: false,
+            // receiveSoundLocation: "receive_message.mp3", // If this is not used, the default sound effect will be played if receiveSoundMessage is true. 
+          },
+          feedback: {
+            color: '#303235',
+          },
+          footer: {
+            textColor: theme_colors[theme],
+            text: 'Powered by',
+            company: 'Evolved AI',
+            companyLink: 'https://www.evolved.ai/',
+          }
+        }
+      }
+    })
+  </script>
+  <script>
+    window.addEventListener('load', function () {
+
+      function changeBackgroundColor(element, color) {
+        var style = window.getComputedStyle(element);
+        element.style.backgroundColor = color;
+      }
+
+      function recolorTopBar () {
+        //top bar
+        el = document.querySelector("body > flowise-fullchatbot").shadowRoot.querySelector("div > div > div.flex.flex-row.items-center.w-full.h-\\[50px\\].absolute.top-0.left-0.z-10")
+        changeBackgroundColor(el, theme_colors[theme])
+      }
+
+      
+      setTimeout(recolorTopBar, 10);
+      setTimeout(recolorTopBar, 100);
+      setTimeout(recolorTopBar, 200);
+
+    });
+  </script>
+</body>
+
+</html>
