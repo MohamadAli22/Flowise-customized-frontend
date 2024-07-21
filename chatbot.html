@@ -35,24 +35,75 @@
       let urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(param);
     }
+    // to fetch data
+    const fetchUrl = async url => {
+      const response = await fetch(url)
+        .catch(error => {
+          console.error('Error:', error); // Handle any errors
+        });
+      return response.json();
+    };
 
     //get theme from url
-    theme = getUrlParam('theme')
-    console.log(theme)
-    if (theme == null)
-      theme = 0
+    theme_color = "#"+getUrlParam('theme') || "F4C095"
+    //get chatId from url
+    chatId = getUrlParam('chatid') || "c8788095-54d7-4041-b036-284de16e3dfb"
 
-    theme_colors = [
-      "rgb(13, 30, 112)",
-      "#1d7874",
-      "#F4C095",
-    ]
+    // const
+    const BASE_URL = "https://evolved-ai-flowise-chatbot.onrender.com"
+
+    // config
+    config = {}
+
+    // get chatflow config
+    configUrl = BASE_URL + "/api/v1/public-chatbotConfig/" + chatId
+    const getConfigAndCrateChat = async () => {
+      try {
+        const config = await fetchUrl(configUrl);
+
+        // Create a script element
+        const script = document.createElement('script');
+        script.type = 'module';
+        script.src = './js/chatbot_module.js'; // Path to your module script
+
+        // Append the script element to the document body
+        document.body.appendChild(script);
+
+        // Wait for the module script to load
+        script.onload = () => {
+          // Create and dispatch a custom event with the value
+          const customEvent = new CustomEvent('moduleEvent', {
+            detail: { config: config, color: theme_color }
+          });
+          window.dispatchEvent(customEvent);
+
+
+          function changeBackgroundColor(element, color) {
+            var style = window.getComputedStyle(element);
+            element.style.backgroundColor = color;
+          }
+          function recolorTopBar() {
+            //top bar
+            el = document.querySelector("body > flowise-fullchatbot").shadowRoot.querySelector("div > div > div.flex.flex-row.items-center.w-full.h-\\[50px\\].absolute.top-0.left-0.z-10")
+            changeBackgroundColor(el, theme_color)
+          }
+
+          setTimeout(recolorTopBar, 10);
+          setTimeout(recolorTopBar, 50);
+          setTimeout(recolorTopBar, 600);
+        };
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+
+    getConfigAndCrateChat();
   </script>
-  <script type="module">
+  <!-- <script type="module">
     import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
     Chatbot.initFull({
-      chatflowid: "c8788095-54d7-4041-b036-284de16e3dfb",
-      apiHost: "https://evolved-ai-flowise-chatbot.onrender.com",
+      chatflowid: chatId,
+      apiHost: BASE_URL,
       theme: {
         chatWindow: {
           showTitle: true,
@@ -65,7 +116,7 @@
           height: 0,
           width: 0,
           fontSize: 16,
-          poweredByTextColor: theme_colors[theme],
+          poweredByTextColor: theme_color,
           botMessage: {
             backgroundColor: "#f7f8ff",
             textColor: "#303235",
@@ -73,7 +124,7 @@
             avatarSrc: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAclBMVEX////4+Ppxdp4JHG88RIHAwtIqNHkABmoBGW4AAF3IythBSYTW1+IAAGMNHnAAEmxkapbk5ewAAFsAFW0AAGfP0NxNVIohLXYADmujpb7p6u81Pn4AAGCztcnu7vOSlbP19fh3e6F9gaW6vM5SWIxZX5AJD7lpAAABlklEQVR4AYWTh5bbIBQFB6MGMnIB7aJeLP//L0YvPVmXURf1Dgd+ow46SXlBluvCWCAtD4qvHF1VVaczXK4+nPlKLRX8B6ShKj55QHGqKh0BH0zDA9qud8HVoIaax6gxLSveMGUzz2gHCyz9erMzAvWRvxhMcAkoF0MwA9B65zIlBssUmI2uqjDB5vc0poVuj5Uf4Bz89QI2iKg7LHF/CQOq359aw2dRhRRuQf6vMMmLs4xirkigMcEDa/QxhBnmkJ9CIka1P5kUqAcFc++2ZZoBxvU+AaWLH2fLL7JF/SdE/+2z1tN/UpeMX9jzFl0JTPd1BpinZXO9vNYjkJrotcRIwkkmyRhC9HEFOneV/4WkGrGSSkStubzckD8+A633714xSPy4wP0kFSwcjc43OOS7wA5aUe03ESWqZ6AJ5Qgqc65oQRYrRKcgcbJYf3GsQZjtbTULYIeWZ8yfE28oynRUPGasgdoF13ctD0ivrgOi3mMVPCDzlbPw4cXcka9suTZHOJ+eVRjL0ADWFDrPeEGa6L+29zePvhz6Kr862gAAAABJRU5ErkJggg==",
           },
           userMessage: {
-            backgroundColor: theme_colors[theme],
+            backgroundColor: theme_color,
             textColor: "#ffffff",
             showAvatar: true,
             avatarSrc: "https://raw.githubusercontent.com/zahidkhawaja/langchain-chat-nextjs/main/public/usericon.png",
@@ -82,7 +133,7 @@
             placeholder: 'Type your question',
             backgroundColor: '#ffffff',
             textColor: '#303235',
-            sendButtonColor: theme_colors[theme],
+            sendButtonColor: theme_color,
             maxChars: 50,
             maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.',
             autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
@@ -95,7 +146,7 @@
             color: '#303235',
           },
           footer: {
-            textColor: theme_colors[theme],
+            textColor: theme_color,
             text: 'Powered by',
             company: 'Evolved AI',
             companyLink: 'https://www.evolved.ai/',
@@ -103,25 +154,11 @@
         }
       }
     })
-  </script>
+  </script> -->
   <script>
     window.addEventListener('load', function () {
 
-      function changeBackgroundColor(element, color) {
-        var style = window.getComputedStyle(element);
-        element.style.backgroundColor = color;
-      }
 
-      function recolorTopBar () {
-        //top bar
-        el = document.querySelector("body > flowise-fullchatbot").shadowRoot.querySelector("div > div > div.flex.flex-row.items-center.w-full.h-\\[50px\\].absolute.top-0.left-0.z-10")
-        changeBackgroundColor(el, theme_colors[theme])
-      }
-
-      
-      setTimeout(recolorTopBar, 10);
-      setTimeout(recolorTopBar, 100);
-      setTimeout(recolorTopBar, 200);
 
     });
   </script>
