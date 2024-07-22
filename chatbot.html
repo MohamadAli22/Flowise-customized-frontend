@@ -25,6 +25,10 @@
   <meta property="twitter:title" content="Evolved AI Chatbot" />
   <meta property="twitter:description" content="Chatbot Description ..." />
   <meta name="twitter:creator" content="@EvolvedAI" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -46,7 +50,7 @@
 
     //get theme from url
     theme_color = getUrlParam('theme') || "0d1e70"
-    theme_color = '#'+theme_color
+    theme_color = '#' + theme_color
     //get chatId from url
     chatId = getUrlParam('chatid') || "a0dc8fd4-ca7a-40dd-aeac-9c33371311d0"
 
@@ -88,10 +92,10 @@
             el = document.querySelector("body > flowise-fullchatbot").shadowRoot.querySelector("div > div > div.flex.flex-row.items-center.w-full.h-\\[50px\\].absolute.top-0.left-0.z-10")
             changeBackgroundColor(el, theme_color)
           }
-
+          
           setTimeout(recolorTopBar, 10);
           setTimeout(recolorTopBar, 50);
-          setTimeout(recolorTopBar, 600);
+          setInterval(recolorTopBar, 1000);
         };
       } catch (error) {
         console.error('Error:', error);

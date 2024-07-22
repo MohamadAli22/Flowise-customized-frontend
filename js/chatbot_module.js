@@ -1,4 +1,5 @@
-import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+// import Chatbot from "https://cdn.jsdelivr.net/npm/flowise-embed/dist/web.js"
+import Chatbot from "./web.js"
 
 
 function handleEvent(event) {
@@ -38,7 +39,7 @@ function handleEvent(event) {
                     backgroundColor: '#ffffff',
                     textColor: '#303235',
                     sendButtonColor: theme_color,
-                    maxChars: 50,
+                    maxChars: 500,
                     maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.',
                     autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
                     sendMessageSound: false,
