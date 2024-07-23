@@ -63,7 +63,23 @@ https://templatemo.com/tm-544-comparto
         <section class="tm-mb-1" id="about">
             <div class="tm-row tm-about-row">
                 <div class="tm-section-1-l">
-                    <iframe frameborder="0" scrolling="no" height="100%" width="100%" style="padding-left: 64pt; padding-right: 64pt;" src="https://mohamadali22.github.io/Flowise-customized-frontend/chatbot.html?theme=0d1e70&chatid=a0dc8fd4-ca7a-40dd-aeac-9c33371311d0" title="chatbot"></iframe>
+                    <style>
+                        .chatbotwidget {
+                            padding-left: 32px;
+                            padding-right: 32px;
+                            min-height: 500px;
+                        }
+                
+                        /* Media query for mobile devices */
+                        @media (max-width: 767px) {
+                            .chatbotwidget {
+                                padding-left: 2px;
+                                padding-right: 2px;
+                                min-height: 500px;
+                            }
+                        }
+                    </style>
+                    <iframe class="chatbotwidget" frameborder="0" scrolling="no" height="100%" width="100%" src="https://mohamadali22.github.io/Flowise-customized-frontend/chatbot.html?theme=0d1e70&chatid=a0dc8fd4-ca7a-40dd-aeac-9c33371311d0" title="chatbot"></iframe>
                 </div>
                 <article class="tm-section-1-r tm-bg-color-8">
                     <h2 class="tm-mb-2 tm-title-color">.01 Comparto CSS Layout</h2>
