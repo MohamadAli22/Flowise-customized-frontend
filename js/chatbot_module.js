@@ -9,7 +9,20 @@ function handleEvent(event) {
     Chatbot.initFull({
         chatflowid: chatId,
         apiHost: BASE_URL,
-        theme: {
+        observersConfig: {
+            observeMessages: (messages) => {
+              for (let i = messages.length-1; i >= 0; i--){
+                if (i==0) continue;
+                const curr_msg = messages[i];
+                const prev_msg = messages[i-1];
+                if (curr_msg.type == 'apiMessage' && prev_msg.type=='apiMessage'){
+                    if (curr_msg.message.includes(prev_msg)){
+                        config.title = 'duplicate issue happened'
+                    }
+                }
+              }
+            },
+        }, theme: {
             chatWindow: {
                 showTitle: true,
                 title: config.title,
@@ -40,8 +53,8 @@ function handleEvent(event) {
                     textColor: '#303235',
                     sendButtonColor: theme_color,
                     maxChars: 500,
-                    maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 50 characters.',
-                    autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
+                    maxCharsWarningMessage: 'You exceeded the characters limit. Please input less than 500 characters.',
+                    // autoFocus: true, // If not used, autofocus is disabled on mobile and enabled on desktop. true enables it on both, false disables it on both.
                     sendMessageSound: false,
                     // sendSoundLocation: "send_message.mp3", // If this is not used, the default sound effect will be played if sendSoundMessage is true.
                     receiveMessageSound: false,
