@@ -40,7 +40,6 @@ function handleEvent(event) {
         apiHost: BASE_URL,
         observersConfig: {
             observeMessages: (messages) => {
-                console.log(messages)
                 for (let i = messages.length - 1; i >= 0; i--) {
                     if (i == 0) continue;
                     const curr_msg = messages[i];
