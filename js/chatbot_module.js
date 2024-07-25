@@ -6,27 +6,50 @@ function handleEvent(event) {
     const config = event.detail.config;
     const theme_color = event.detail.color;
 
+    function removeMsgBoxByText(text) {
+        // Get all elements with the attribute data-testid="host-bubble"
+
+        const elements = document.querySelector("body > flowise-fullchatbot").shadowRoot
+            .querySelectorAll('[data-testid="host-bubble"]');
+
+        elements.forEach(element => {
+            // Initialize a variable to hold the combined text
+            let combinedText = '';
+
+            // Function to recursively get text from all child nodes
+            function getTextFromNode(node) {
+                if (node.nodeType === Node.TEXT_NODE)
+                    combinedText += node.textContent.trim();
+                else if (node.nodeType === Node.ELEMENT_NODE)
+                    node.childNodes.forEach(childNode => getTextFromNode(childNode));
+            }
+
+            // Start the recursive text extraction from the element itself
+            getTextFromNode(element);
+
+            // Check if the combined text contains the specified text
+            if (combinedText.includes(text)) {
+                console.log('removing this', element)
+                element.remove(); // Remove the element from the DOM
+            }
+        });
+    }
+
     Chatbot.initFull({
         chatflowid: chatId,
         apiHost: BASE_URL,
         observersConfig: {
             observeMessages: (messages) => {
                 console.log(messages)
-              for (let i = messages.length-1; i >= 0; i--){
-                if (i==0) continue;
-                const curr_msg = messages[i];
-                const prev_msg = messages[i-1];
-                if (curr_msg.type == 'apiMessage' && prev_msg.type=='apiMessage'){
-                    if (curr_msg.message.includes(prev_msg)){
-                        console.log('duplicate found', curr_msg, prev_msg)
-                    }else{
-                        console.log('includes is false')
-                    }
-                }else{
-                    console.log('no 2 api msg in a raw')
+                for (let i = messages.length - 1; i >= 0; i--) {
+                    if (i == 0) continue;
+                    const curr_msg = messages[i];
+                    const prev_msg = messages[i - 1];
+                    if (curr_msg.type == 'apiMessage' && prev_msg.type == 'apiMessage'
+                        && curr_msg.message.includes(prev_msg))
+                        removeMsgBoxByText(prev_msg)
                 }
-              }
-            },
+            }
         }, theme: {
             chatWindow: {
                 showTitle: true,
