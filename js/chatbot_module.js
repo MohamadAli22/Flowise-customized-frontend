@@ -11,6 +11,7 @@ function handleEvent(event) {
         apiHost: BASE_URL,
         observersConfig: {
             observeMessages: (messages) => {
+                console.log(messages)
               for (let i = messages.length-1; i >= 0; i--){
                 if (i==0) continue;
                 const curr_msg = messages[i];
@@ -18,7 +19,11 @@ function handleEvent(event) {
                 if (curr_msg.type == 'apiMessage' && prev_msg.type=='apiMessage'){
                     if (curr_msg.message.includes(prev_msg)){
                         alert('duplicate found')
+                    }else{
+                        console.log('includes is false')
                     }
+                }else{
+                    console.log('no 2 api msg in a raw')
                 }
               }
             },
