@@ -18,7 +18,7 @@ function handleEvent(event) {
                 const prev_msg = messages[i-1];
                 if (curr_msg.type == 'apiMessage' && prev_msg.type=='apiMessage'){
                     if (curr_msg.message.includes(prev_msg)){
-                        alert('duplicate found')
+                        console.log('duplicate found', curr_msg, prev_msg)
                     }else{
                         console.log('includes is false')
                     }
