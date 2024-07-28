@@ -35,6 +35,67 @@ function handleEvent(event) {
         });
     }
 
+    function startsWith(longerString, shorterString) {
+        // Check if the length of the longer string is at least as long as the shorter string
+        if (longerString.length < shorterString.length) {
+            let temp = shorterString
+            shorterString = longerString
+            longerString = temp
+        }
+
+        // Check character by character
+        for (let i = 0; i < shorterString.length; i++) {
+            if (longerString[i] !== shorterString[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    function checkDuplicateMsgRegularly() {
+        console.log('check duplication...')
+        let combinedText = '';
+        // Function to recursively get text from all child nodes
+        function getTextFromNode(node) {
+            if (node.nodeType === Node.TEXT_NODE)
+                combinedText += node.textContent.trim();
+            else if (node.nodeType === Node.ELEMENT_NODE)
+                node.childNodes.forEach(childNode => getTextFromNode(childNode));
+        }
+
+        const elements = document.querySelector("body > flowise-fullchatbot").shadowRoot
+            .querySelectorAll('[data-testid="host-bubble"]');
+
+        if (elements)
+            elements.forEach(element1 => {
+                combinedText = '';
+                getTextFromNode(element1);
+                const text1 = combinedText
+
+                elements.forEach(element2 => {
+                    // Initialize a variable to hold the combined text
+                    combinedText = '';
+
+                    // Start the recursive text extraction from the element itself
+                    getTextFromNode(element2);
+
+                    if (combinedText != text1)
+                        // Check if the combined text contains the specified text
+                        if (combinedText.includes(text1) && startsWith(combinedText, text1) && text1.length > 50) {
+                            console.log('removing this', element1)
+                            element1.remove(); // Remove the element from the DOM
+                        } else if (text1.includes(combinedText) && startsWith(combinedText, text1) && combinedText.length > 50) {
+                            console.log('removing this', element2)
+                            element2.remove(); // Remove the element from the DOM
+                        }
+                });
+            });
+    }
+
+    setInterval(checkDuplicateMsgRegularly, 2000);
+
     Chatbot.initFull({
         chatflowid: chatId,
         apiHost: BASE_URL,
@@ -47,6 +108,9 @@ function handleEvent(event) {
                     if (curr_msg.type == 'apiMessage' && prev_msg.type == 'apiMessage'
                         && curr_msg.message.includes(prev_msg))
                         removeMsgBoxByText(prev_msg)
+                    else if (curr_msg.type == 'apiMessage' && prev_msg.type == 'apiMessage'
+                        && prev_msg.message.includes(curr_msg))
+                        removeMsgBoxByText(curr_msg)
                 }
             }
         }, theme: {
